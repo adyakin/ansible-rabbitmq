@@ -1,6 +1,76 @@
 ---
 
-- name: Install rabbitmq-server
+- name: Install dependencies
   apt:
-    name: 'rabbitmq-server'
     state: present
+    pkg:
+      - curl
+      - gnupg
+      - debian-keyring
+      - debian-archive-keyring
+      - apt-transport-https
+
+- name: Add rabbitmq key
+  ansible.builtin.apt_key:
+    keyserver: hkps://keys.openpgp.org
+    id: 0x0A9AF2115F4687BD29803A206B73A36E6026DFCA
+    state: present
+
+- name: Add launchpad key
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: F77F1EDA57EBB1CC
+    state: present
+
+- name: Add packagecloud key
+  ansible.builtin.apt_key:
+    url: https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey
+    state: present
+
+- name: Add rabbitmq repo
+  blockinfile:
+    path: /etc/apt/sources.list.d/rabbitmq.list
+    create: yes
+    block: |
+      ## Provides modern Erlang/OTP releases
+      ##
+      ## "bionic" as distribution name should work for any reasonably recent Ubuntu or Debian release.
+      ## See the release to distribution mapping table in RabbitMQ doc guides to learn more.
+      deb http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main
+      deb-src http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main
+
+      ## Provides RabbitMQ
+      ##
+      ## "bionic" as distribution name should work for any reasonably recent Ubuntu or Debian release.
+      ## See the release to distribution mapping table in RabbitMQ doc guides to learn more.
+      deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
+      deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
+
+- name: Install erlang
+  apt:
+    state: present
+    update_cache: yes
+    pkg:
+      - erlang-base
+      - erlang-asn1
+      - erlang-crypto
+      - erlang-eldap
+      - erlang-ftp
+      - erlang-inets
+      - erlang-mnesia
+      - erlang-os-mon
+      - erlang-parsetools
+      - erlang-public-key
+      - erlang-runtime-tools
+      - erlang-snmp
+      - erlang-ssl
+      - erlang-syntax-tools
+      - erlang-tftp
+      - erlang-tools
+      - erlang-xmerl
+
+- name: install rabbitmq
+  apt:
+    state: present
+    name:
+      rabbitmq-server
