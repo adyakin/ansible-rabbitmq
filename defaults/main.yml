@@ -1,5 +1,10 @@
 ---
 
+gpg_keys:
+  - "https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc"
+  - "https://packagecloud.io/rabbitmq/erlang/gpgkey"
+  - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"
+
 # Plugins to enabled
 rabbitmq_plugins: []
 

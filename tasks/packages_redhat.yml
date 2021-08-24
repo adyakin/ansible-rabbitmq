@@ -1,6 +1,24 @@
 ---
 
+- name: import rpm gpg key
+  rpm_key:
+    state: present
+    key: "{{ item }}"
+  with_items: "{{ gpg_keys }}"
+
+- name: install rabbitmq repo file
+  template:
+    src: rabbitmq.repo.j2
+    dest: /etc/yum.repos.d/rabbitmq.repo
+    owner: root
+    group: root
+    mode: 0644
+    backup: yes
+
 - name: Install rabbitmq-server
   yum:
     name: 'rabbitmq-server'
     state: present
+    disablerepo: "*"
+    enablerepo: "rabbitmq_erlang,rabbitmq_server"
+    

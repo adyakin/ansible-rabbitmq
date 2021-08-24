@@ -1,0 +1,40 @@
+- hosts: rabbitmq
+  become: True
+  serial:
+    - '100%'
+  roles:
+    - role: ansible-rabbitmq
+      rabbitmq_cluster: false
+      rabbitmq_plugins:
+      - rabbitmq_management
+      - rabbitmq_federation
+      - rabbitmq_federation_management
+      - rabbitmq_prometheus
+      - rabbitmq_shovel
+      - rabbitmq_shovel_management
+      rabbitmq_vhosts:
+      - name: test
+        state: present
+      rabbitmq_users:
+      - user: admin
+        password: admin
+        tags:
+        - administrator
+      - user: admin
+        password: admin
+        vhost: test
+        tags:
+        - administrator
+      - user: test
+        password: test
+        vhost: test
+      - user:     guest
+        state:    absent                # Optional, removes user (defaults to "present")
+      rabbitmq_policies:
+        - name: "ha-policy"
+          vhost: 'test'                   # Optional, defaults to "/"
+          pattern:  '.*'                  # Optional, defaults to ".*"
+          tags:                           # Optional, defaults to "{}"
+            ha-mode: all
+            ha-sync-mode: automatic
+          state:    present
