@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=./[current file].yaml
+---
+# build cluster
+# run when cluster_name defined
+
+- name: loop
+  set_fact:
+    master: "{{ hostvars[item]['inventory_hostname'] }}"
+  loop: "{{ groups['rabbitmq'] }}"
+  when: "hostvars[item]['is_master'] is defined"
+
+- name: check master settings
+  fail:
+    msg: "master host should be defined"
+  when: master is not defined
+
+- name: show master
+  debug:
+    msg: "master={{ master }}"
+
+- name: stop rabbitmq_app
+  command: rabbitmqctl stop_app
+  when: inventory_hostname != master
+
+- name: reset rabbitmq
+  command: rabbitmqctl reset
+  when: inventory_hostname != master
+
+- name: join rabbitmq cluster
+  debug:
+    msg: "echo rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['inventory_hostname'] }}"
+  when: inventory_hostname != master
+
+- name: start rabbitmq
+  command: "rabbitmqctl start_app"
+  when: inventory_hostname != master
