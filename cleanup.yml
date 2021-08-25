@@ -1,0 +1,21 @@
+---
+- name: cleanup rabbitmq installation
+  hosts: all
+  become: true
+
+  tasks:
+
+  - name: uninstall rabbitmq packages
+    yum:
+      state: absent
+      name:
+        - rabbitmq-server
+        - erlang
+
+  - name: cleanup files
+    file:
+      state: absent
+      path: "{{ item }}"
+    with_items:
+      - /etc/rabbitmq
+      - /var/lib/rabbitmq

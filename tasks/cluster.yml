@@ -18,6 +18,12 @@
   debug:
     msg: "master={{ master }}"
 
+- name: collect erlang cookie
+  command: "cat {{ rabbitmq_erlang_cookie_file }}"
+  register: "rabbitmq_erlang_cookie"
+  when: inventory_hostname == rabbitmq_master
+
+
 - name: stop rabbitmq_app
   command: rabbitmqctl stop_app
   when: inventory_hostname != master

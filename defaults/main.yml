@@ -5,6 +5,8 @@ gpg_keys:
   - "https://packagecloud.io/rabbitmq/erlang/gpgkey"
   - "https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey"
 
+rabbitmq_erlang_cookie_file: '/var/lib/rabbitmq/.erlang.cookie'
+
 # Plugins to enabled
 rabbitmq_plugins: []
 

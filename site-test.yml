@@ -4,7 +4,7 @@
     - '100%'
   roles:
     - role: ansible-rabbitmq
-      rabbitmq_cluster: false
+      rabbitmq_cluster: true
       rabbitmq_plugins:
       - rabbitmq_management
       - rabbitmq_federation
