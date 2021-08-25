@@ -13,3 +13,6 @@
     state: '{{ item.state | default("present") }}'
     force: '{{ item.force | default("no") }}'
   with_items: '{{ rabbitmq_users }}'
+  when: rabbitmq_cluster is defined
+        and rabbitmq_cluster
+        and inventory_hostname == play_hosts[0]
