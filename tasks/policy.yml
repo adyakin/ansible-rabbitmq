@@ -7,4 +7,5 @@
     vhost: '{{ item.vhost | default("/") }}'
     state: '{{ item.state | default("present") }}'
     tags: '{{ item.tags | default({}) }}'
+    node: 'rabbit@{{ ansible_hostname }}'
   with_items: '{{ rabbitmq_policies }}'
