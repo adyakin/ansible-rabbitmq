@@ -29,6 +29,10 @@
   blockinfile:
     path: /etc/apt/sources.list.d/rabbitmq.list
     create: yes
+    backup: yes
+    mode: 0644
+    owner: root
+    group: root
     block: |
       ## Provides modern Erlang/OTP releases
       ##

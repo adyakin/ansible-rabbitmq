@@ -33,6 +33,7 @@
   ini_file:
     dest: /etc/systemd/system/rabbitmq-server.service.d/limits.conf
     create: yes
+    mode: 0644
     section: Service
     option: LimitNOFILE
     value: '{{ rabbitmq_fd_limit }}'

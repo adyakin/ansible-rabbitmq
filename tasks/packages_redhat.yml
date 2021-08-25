@@ -21,4 +21,3 @@
     state: present
     disablerepo: "*"
     enablerepo: "rabbitmq_erlang,rabbitmq_server"
-    
