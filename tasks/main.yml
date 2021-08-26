@@ -19,7 +19,10 @@
   when: rabbitmq_cluster is defined and rabbitmq_cluster
 
 - include: cluster.yml
-  when: rabbitmq_enable_clustering and not clustered['stat']['exists']
+  when: >
+    rabbitmq_cluster is defined
+    and rabbitmq_cluster
+    and not clustered['stat']['exists']
 
 - include: plugins.yml
 - include: vhost.yml

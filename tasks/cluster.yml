@@ -5,19 +5,18 @@
 
 - name: set master to first host in group
   set_fact:
-    master: "{{ play_hosts[0]] }}"
-  when: "rabbit_cluster is defined and rabbit_cluster"
+    master: "{{ play_hosts[0] }}"
 
 - name: show master
   debug:
     msg: "master={{ master }}"
 
-- name: check dns configuration
+- name: check dns configuration  # noqa 301
   command: "grep -q search /etc/resolv.conf"
   ignore_errors: yes
   register: search_in_resolvconf
 
-- name:
+- name: fail if no search domain in resolv.conf
   fail:
     msg: "resolv.conf should contain search domain"
   when: search_in_resolvconf.failed
@@ -31,8 +30,7 @@
   when: inventory_hostname != master
 
 - name: join rabbitmq cluster
-  debug:
-    msg: "echo rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['ansible_hostname'] }}"
+  command: "rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['ansible_hostname'] }}"
   register: cluster_joined
   when: inventory_hostname != master
 
@@ -40,7 +38,7 @@
   command: "rabbitmqctl start_app"
   when: inventory_hostname != master
 
-- name: marking as clustered # noqa 503
+- name: marking as clustered  # noqa 503
   file:
     path: /etc/rabbitmq/clustered
     state: touch

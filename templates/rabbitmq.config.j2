@@ -1,10 +1,28 @@
-[
-  {rabbit, [
+
+log.file.level = {{ rabbitmq_log_level }}
+
+# disk and memory flow control settings
+disk_free_limit.absolute = {{ rabbitmq_disk_free_limit_absolute }}
+vm_memory_high_watermark.relative = {{ rabbitmq_vm_watermark_relative }}
+
+# tcp listener
 {% if rabbitmq_tcp_address != '' %}
-    {tcp_listeners, [{"{{ rabbitmq_tcp_address }}", {{ rabbitmq_tcp_port }}}]}
+listeners.tcp.default = "{{ rabbitmq_tcp_address }}:{{ rabbitmq_tcp_port }}"
 {% else %}
-    {tcp_listeners, [{{ rabbitmq_tcp_port }}]}
+listeners.tcp.default = 5672
 {% endif %}
 
-  ]}
-].
+# SSL settings
+{% if rabbitmq_ssl %}
+listeners.ssl.default = 5671
+
+ssl_options.cacertfile = {{ rabbitmq_ssl_cacert_path }}
+ssl_options.certfile   = {{ rabbitmq_ssl_cert_path }}
+ssl_options.keyfile    = {{ rabbitmq_ssl_key_path }}
+
+{% if rabbitmq_ssl_verify_peer %}
+ssl_options.verify     = verify_peer
+ssl_options.fail_if_no_peer_cert = true
+{% endif %}
+
+{% endif %}
