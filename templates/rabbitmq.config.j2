@@ -17,8 +17,8 @@ listeners.tcp.default = 5672
 listeners.ssl.default = 5671
 
 ssl_options.cacertfile = {{ rabbitmq_ssl_cacert_path }}
-ssl_options.certfile   = {{ rabbitmq_ssl_cert_path }}
-ssl_options.keyfile    = {{ rabbitmq_ssl_key_path }}
+ssl_options.certfile   = {{ rabbitmq_ssl_dir }}/{{ ansible_hostname|lower }}.crt
+ssl_options.keyfile    = {{ rabbitmq_ssl_dir }}/{{ ansible_hostname|lower }}.key
 
 {% if rabbitmq_ssl_verify_peer %}
 ssl_options.verify     = verify_peer

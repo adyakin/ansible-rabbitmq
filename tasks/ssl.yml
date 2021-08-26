@@ -1,0 +1,28 @@
+---
+
+- name: SSL | create ssl directory
+  file:
+    path: "{{ rabbitmq_ssl_dir }}"
+    state: directory
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0755
+
+- name: SSL | copy certificates
+  copy:
+    src: "{{ item }}"
+    dest: "{{ rabbitmq_ssl_dir}}/{{ item|lower }}"
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0644
+  with_items:
+    - "ca.crt"
+    - "{{ ansible_hostname|lower }}.crt"
+
+- name: SSL | copy certificate key
+  copy:
+    src: "{{ ansible_hostname|lower }}.key"
+    dest: "{{ rabbitmq_ssl_dir}}/{{ ansible_hostname|lower }}.key"
+    owner: rabbitmq
+    group: rabbitmq
+    mode: 0600
