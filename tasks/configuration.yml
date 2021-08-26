@@ -2,7 +2,7 @@
 
 - name: Configure RabbitMQ
   template:
-    dest: '/etc/rabbitmq/rabbitmq.config'
+    dest: '/etc/rabbitmq/rabbitmq.conf'
     group: 'rabbitmq'
     mode: 0644
     owner: 'rabbitmq'
