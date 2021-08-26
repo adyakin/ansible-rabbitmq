@@ -3,26 +3,24 @@
 # build cluster
 # run when cluster_name defined
 
-- name: loop
+- name: set master to first host in group
   set_fact:
-    master: "{{ hostvars[item]['inventory_hostname'] }}"
-  loop: "{{ groups['rabbitmq'] }}"
-  when: "hostvars[item]['is_master'] is defined"
-
-- name: check master settings
-  fail:
-    msg: "master host should be defined"
-  when: master is not defined
+    master: "{{ play_hosts[0]] }}"
+  when: "rabbit_cluster is defined and rabbit_cluster"
 
 - name: show master
   debug:
     msg: "master={{ master }}"
 
-- name: collect erlang cookie
-  command: "cat {{ rabbitmq_erlang_cookie_file }}"
-  register: "rabbitmq_erlang_cookie"
-  when: inventory_hostname == rabbitmq_master
+- name: check dns configuration
+  command: "grep -q search /etc/resolv.conf"
+  ignore_errors: yes
+  register: search_in_resolvconf
 
+- name:
+  fail:
+    msg: "resolv.conf should contain search domain"
+  when: search_in_resolvconf.failed
 
 - name: stop rabbitmq_app
   command: rabbitmqctl stop_app
@@ -34,9 +32,20 @@
 
 - name: join rabbitmq cluster
   debug:
-    msg: "echo rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['inventory_hostname'] }}"
+    msg: "echo rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['ansible_hostname'] }}"
+  register: cluster_joined
   when: inventory_hostname != master
 
 - name: start rabbitmq
   command: "rabbitmqctl start_app"
   when: inventory_hostname != master
+
+- name: marking as clustered # noqa 503
+  file:
+    path: /etc/rabbitmq/clustered
+    state: touch
+    mode: 0644
+    owner: root
+    group: root
+  when: >
+    cluster_joined['changed']

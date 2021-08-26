@@ -1,8 +1,5 @@
 ---
 
-- include: cluster.yml
-
-
 - include: packages_redhat.yml
   when: ansible_os_family == 'RedHat'
 
@@ -14,6 +11,15 @@
 - include: services.yml
 
 - meta: flush_handlers
+
+- name: checking if clustered
+  stat:
+    path: /etc/rabbitmq/clustered
+  register: clustered
+  when: rabbitmq_cluster is defined and rabbitmq_cluster
+
+- include: cluster.yml
+  when: rabbitmq_enable_clustering and not clustered['stat']['exists']
 
 - include: plugins.yml
 - include: vhost.yml
