@@ -30,7 +30,7 @@
   when: inventory_hostname != master
 
 - name: join rabbitmq cluster
-  command: "rabbitmqctl join_cluster rabbitmq@{{ hostvars[master]['ansible_hostname'] }}"
+  command: "rabbitmqctl join_cluster rabbit@{{ hostvars[master]['ansible_hostname'] }}"
   register: cluster_joined
   when: inventory_hostname != master
 
