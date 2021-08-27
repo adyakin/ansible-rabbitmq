@@ -5,6 +5,7 @@
 
 - name: set cluster name  # noqa 301
   command: "rabbitmqctl set_cluster_name {{ rabbitmq_cluster_name }}"
+  changed_when: false
 
 - name: set master to first host in group
   set_fact:
