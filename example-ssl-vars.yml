@@ -6,7 +6,7 @@ certificates:
 
   node1.crt: |
     # NODE1 certificate
-  
+
   node1.key: |
     # NODE1 key
 

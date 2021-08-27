@@ -3,7 +3,7 @@
 # build cluster
 # run when cluster_name defined
 
-- name: set cluster name
+- name: set cluster name  # noqa 301
   command: "rabbitmqctl set_cluster_name {{ rabbitmq_cluster_name }}"
 
 - name: set master to first host in group
