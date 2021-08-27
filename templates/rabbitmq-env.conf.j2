@@ -1,6 +1,8 @@
+{% if rabbitmq_conf_env is defined %}
 {% for variable,value in rabbitmq_conf_env.iteritems() %}
 {{ variable|upper() }}={{ value }}
 {% endfor %}
+{% endif %}
 
 {% if rabbitmq_ssl_cluster %}
 # use SSL for inter-node communications
