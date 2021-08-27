@@ -20,6 +20,9 @@ rabbitmq_vhosts: []
 rabbitmq_users: []
 rabbitmq_policies: []
 
+# cluster name
+rabbitmq_cluster_name: 'rabbit'
+
 # rabbitmq TCP configuration
 rabbitmq_tcp_address: ''
 rabbitmq_tcp_port: 5672
