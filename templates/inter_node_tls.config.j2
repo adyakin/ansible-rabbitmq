@@ -1,0 +1,10 @@
+[
+  {server, [
+    {cacertfile, "{{ rabbitmq_ssl_cacert_path }}"},
+    {certfile,   "{{ rabbitmq_ssl_dir }}/{{ ansible_hostname|lower }}.crt"},
+    {keyfile,    "{{ rabbitmq_ssl_dir }}/{{ ansible_hostname|lower }}.key"},
+    {secure_renegotiate, true},
+    {verify, verify_peer},
+    {fail_if_no_peer_cert, false}
+  ]}
+].

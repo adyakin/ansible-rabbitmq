@@ -1,3 +1,16 @@
 {% for variable,value in rabbitmq_conf_env.iteritems() %}
 {{ variable|upper() }}={{ value }}
 {% endfor %}
+
+{% if rabbitmq_ssl_cluster %}
+# use SSL for inter-node communications
+# https://www.rabbitmq.com/clustering-ssl.html
+{{ erl_ssl_lib.stdout }}
+#SERVER_ADDITIONAL_ERL_ARGS="-pa $ERL_SSL_PATH \
+#  -proto_dist inet_tls \
+#  -ssl_dist_opt server_certfile {{ rabbitmq_ssl_dir}}/combined.crt \
+#  -ssl_dist_opt server_secure_renegotiate true client_secure_renegotiate true"
+SERVER_ADDITIONAL_ERL_ARGS="-pa $ERL_SSL_PATH
+  -proto_dist inet_tls
+  -ssl_dist_optfile /etc/rabbitmq/inter_node_tls.config"
+{% endif %}

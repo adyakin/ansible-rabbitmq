@@ -1,4 +1,5 @@
 ---
+# configure AMQP/SSL for client communications
 
 - name: SSL | create ssl directory
   file:

@@ -27,9 +27,13 @@ rabbitmq_cluster: False
 rabbitmq_erlang_cookie: 'THISISACOOKIEMONSTER'
 
 # rabbitmq SSL configuration
+# amqp/ssl
 rabbitmq_ssl: no
 rabbitmq_ssl_dir: "/etc/rabbitmq/ssl"
 rabbitmq_ssl_cacert_path: "/etc/rabbitmq/ssl/ca.crt"
 rabbitmq_ssl_cert_path: "/etc/rabbitmq/ssl/server.crt"
 rabbitmq_ssl_key_path: "/etc/rabbitmq/ssl/server.key"
 rabbitmq_ssl_verify_peer: no
+
+# use SSL for inter-node communications
+rabbitmq_ssl_cluster: no
