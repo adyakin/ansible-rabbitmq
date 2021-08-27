@@ -23,7 +23,7 @@
 - name: SSL | copy certificate key
   copy:
     content: "{{ certificates[ ansible_hostname|lower ~ '.key' ] }}"
-    dest: "{{ ansible_hostname|lower }}.key"
+    dest: "{{ rabbitmq_ssl_dir}}/{{ ansible_hostname|lower }}.key"
     owner: rabbitmq
     group: rabbitmq
     mode: 0600
