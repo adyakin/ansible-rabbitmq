@@ -11,7 +11,7 @@
 
 - name: SSL | copy certificates
   copy:
-    src: "{{ item }}"
+    content: "{{ item }}"
     dest: "{{ rabbitmq_ssl_dir}}/{{ item|lower }}"
     owner: rabbitmq
     group: rabbitmq
@@ -22,7 +22,7 @@
 
 - name: SSL | copy certificate key
   copy:
-    src: "{{ certificates[ ansible_hostname|lower ~ '.key' ] }}"
+    content: "{{ certificates[ ansible_hostname|lower ~ '.key' ] }}"
     dest: "{{ ansible_hostname|lower }}.key"
     owner: rabbitmq
     group: rabbitmq
