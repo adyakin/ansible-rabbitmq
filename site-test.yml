@@ -4,6 +4,8 @@
   become: True
   serial:
     - '100%'
+  vars_files:
+    - example-ssl-vars.yml
   roles:
     - role: ansible-rabbitmq
       rabbitmq_cluster: true

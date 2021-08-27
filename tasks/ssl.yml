@@ -11,14 +11,14 @@
 
 - name: SSL | copy certificates
   copy:
-    content: "{{ item }}"
-    dest: "{{ rabbitmq_ssl_dir}}/{{ item|lower }}"
+    content: "{{ item.content }}"
+    dest: "{{ rabbitmq_ssl_dir}}/{{ item.name }}"
     owner: rabbitmq
     group: rabbitmq
     mode: 0644
   with_items:
-    - "{{ certificates.ca }}"
-    - "{{ certificates[ ansible_hostname|lower ~ '.crt' ] }}"
+    - { name: "ca.crt", content: "{{ certificates.ca }}" }
+    - { name: "{{ ansible_hostname|lower }}.crt", content: "{{ certificates[ ansible_hostname|lower ~ '.crt' ] }}" }
 
 - name: SSL | copy certificate key
   copy:
