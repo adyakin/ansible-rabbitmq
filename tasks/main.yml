@@ -7,7 +7,7 @@
   when: ansible_os_family == 'Debian'
 
 - include: ssl.yml
-  when: rabbitmq_ssl is defined and rabbitmq_ssl
+  when: rabbitmq_ssl
 
 - include: configuration.yml
 

@@ -39,7 +39,6 @@
     src: 'rabbitmq-env.conf.j2'
     backup: yes
   notify: Restart RabbitMQ server
-  when: rabbitmq_conf_env is defined
 
 - name: RabbitMQ set Erlang cookie
   template:

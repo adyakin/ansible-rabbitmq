@@ -7,6 +7,8 @@
   roles:
     - role: ansible-rabbitmq
       rabbitmq_cluster: true
+      rabbitmq_ssl: yes
+      rabbitmq_ssl_cluster: yes
       rabbitmq_plugins:
         - rabbitmq_management
         - rabbitmq_federation

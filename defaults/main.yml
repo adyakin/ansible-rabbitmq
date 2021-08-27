@@ -24,7 +24,7 @@ rabbitmq_policies: []
 rabbitmq_tcp_address: ''
 rabbitmq_tcp_port: 5672
 rabbitmq_cluster: False
-rabbitmq_erlang_cookie: 'THISISACOOKIEMONSTER'
+rabbitmq_erlang_cookie: 'THISISACOOKIEMONSTER2'
 
 # rabbitmq SSL configuration
 # amqp/ssl
