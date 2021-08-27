@@ -14,6 +14,7 @@
 - name: check dns configuration  # noqa 301
   command: "grep -q search /etc/resolv.conf"
   ignore_errors: yes
+  changed_when: false
   register: search_in_resolvconf
 
 - name: fail if no search domain in resolv.conf

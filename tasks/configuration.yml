@@ -13,6 +13,7 @@
 - name: Get erlang ssl path
   command: "erl -noinput -eval 'io:format(\"ERL_SSL_PATH=~s~n\", [filename:dirname(code:which(inet_tls_dist))])' -s init stop"
   register: erl_ssl_lib
+  changed_when: false
   when: rabbitmq_ssl_cluster
 
 - name: debug

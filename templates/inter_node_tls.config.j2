@@ -6,5 +6,12 @@
     {secure_renegotiate, true},
     {verify, verify_peer},
     {fail_if_no_peer_cert, false}
+  ]},
+
+  {client, [
+    {cacertfile, "{{ rabbitmq_ssl_cacert_path }}"},
+    {secure_renegotiate, true},
+    {verify, verify_peer},
+    {fail_if_no_peer_cert, false}
   ]}
 ].

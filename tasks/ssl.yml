@@ -17,13 +17,13 @@
     group: rabbitmq
     mode: 0644
   with_items:
-    - "ca.crt"
-    - "{{ ansible_hostname|lower }}.crt"
+    - "{{ certificates.ca }}"
+    - "{{ certificates[ ansible_hostname|lower ~ '.crt' ] }}"
 
 - name: SSL | copy certificate key
   copy:
-    src: "{{ ansible_hostname|lower }}.key"
-    dest: "{{ rabbitmq_ssl_dir}}/{{ ansible_hostname|lower }}.key"
+    src: "{{ certificates[ ansible_hostname|lower ~ '.key' ] }}"
+    dest: "{{ ansible_hostname|lower }}.key"
     owner: rabbitmq
     group: rabbitmq
     mode: 0600

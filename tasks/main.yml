@@ -32,4 +32,4 @@
 - include: user.yml
 - include: policy.yml
 
-- include: sanitycheck.yml
+#- include: sanitycheck.yml
