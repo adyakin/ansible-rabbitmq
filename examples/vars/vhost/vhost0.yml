@@ -1,4 +1,7 @@
-vhost:
+vhost0:
+  name: test
+  state: present
+  tracing: no
   rabbitmq_users:
     - user: admin
       password: admin
