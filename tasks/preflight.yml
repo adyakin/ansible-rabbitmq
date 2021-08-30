@@ -5,6 +5,23 @@
     msg: "rabbitmq_cluster_name variable is required."
   when: rabbitmq_cluster_name is not defined
 
+- name: check dns configuration  # noqa 301
+  command: "grep -q search /etc/resolv.conf"
+  ignore_errors: yes
+  changed_when: false
+  register: search_in_resolvconf
+  when: >
+    rabbitmq_cluster is defined
+    and rabbitmq_cluster
+
+- name: fail if no search domain in resolv.conf
+  fail:
+    msg: "resolv.conf should contain search domain"
+  when: >
+    search_in_resolvconf.failed
+    and rabbitmq_cluster is defined
+    and rabbitmq_cluster
+
 - name: preflight | load SSL configuration
   include_vars:
     file: "vars/{{ rabbitmq_cluster_name }}-ssl.yml"

@@ -15,17 +15,6 @@
   debug:
     msg: "master={{ master }}"
 
-- name: check dns configuration  # noqa 301
-  command: "grep -q search /etc/resolv.conf"
-  ignore_errors: yes
-  changed_when: false
-  register: search_in_resolvconf
-
-- name: fail if no search domain in resolv.conf
-  fail:
-    msg: "resolv.conf should contain search domain"
-  when: search_in_resolvconf.failed
-
 - name: stop rabbitmq_app
   command: rabbitmqctl stop_app
   when: inventory_hostname != master
