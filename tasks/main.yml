@@ -1,5 +1,8 @@
 ---
 
+- name: pre-flight check
+  include: preflight.yml
+
 - include: packages_redhat.yml
   when: ansible_os_family == 'RedHat'
 

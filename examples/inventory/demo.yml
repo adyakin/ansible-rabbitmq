@@ -1,0 +1,43 @@
+rabbitmq:
+  hosts:
+    127.0.0.1:
+    127.0.0.2:
+    172.0.0.3:
+  vars:
+    rabbitmq_cluster: true
+    rabbitmq_cluster_name: demo
+    rabbitmq_ssl: yes
+    rabbitmq_ssl_cluster: yes
+    rabbitmq_plugins:
+      - rabbitmq_management
+      - rabbitmq_federation
+      - rabbitmq_federation_management
+      - rabbitmq_prometheus
+      - rabbitmq_shovel
+      - rabbitmq_shovel_management
+    rabbitmq_vhosts:
+      - name: test
+        state: present
+    rabbitmq_users:
+      - user: admin
+        password: admin
+        tags:
+          - administrator
+      - user: admin
+        password: admin
+        vhost: test
+        tags:
+          - administrator
+      - user: test
+        password: test
+        vhost: test
+      - user: guest
+        state: absent # Optional, removes user (defaults to "present")
+    rabbitmq_policies:
+      - name: "ha-policy"
+        vhost: "test" # Optional, defaults to "/"
+        pattern: ".*" # Optional, defaults to ".*"
+        tags: # Optional, defaults to "{}"
+          ha-mode: all
+          ha-sync-mode: automatic
+        state: present

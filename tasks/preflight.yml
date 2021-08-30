@@ -1,0 +1,40 @@
+---
+
+- name: prefligth | check variables
+  fail:
+    msg: "rabbitmq_cluster_name variable is required."
+  when: rabbitmq_cluster_name is not defined
+
+- name: preflight | load SSL configuration
+  include_vars:
+    depth: 1
+    files: "vars/{{ rabbitmq_cluster_name }}-ssl.yml"
+  when: rabbitmq_ssl
+
+- name: preflight | check top level SSL configuration
+  fail:
+    msg: "certificates required when SSL enabled."
+  when: >
+    certificates is not defined
+
+- name: preflight | check certificates configuration
+  fail:
+    msg: "{{ item }} required when SSL enabled."
+  when: "certificates[ item ] is undefined"
+  loop:
+    - "ca"
+    - "ansible_hostname|lower ~ '.crt'"
+    - "ansible_hostname|lower ~ '.key'"
+
+- name: preflight | load vhosts configuration
+  include_vars:
+    dir: "vars/vhost/"
+    name: vhosts
+    extensions:
+      - 'yaml'
+      - 'yml'
+
+- name: preflight | show vhosts config
+  debug:
+    msg: " vhost={{ item }}, users = {{ vhosts[item]['rabbitmq_users'] }}, policies={{ vhost[item]['rabbitmq_policies'] }} "
+  with_items: "{{ vhosts }}"
