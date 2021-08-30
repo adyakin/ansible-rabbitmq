@@ -7,8 +7,7 @@
 
 - name: preflight | load SSL configuration
   include_vars:
-    depth: 1
-    files: "vars/{{ rabbitmq_cluster_name }}-ssl.yml"
+    file: "vars/{{ rabbitmq_cluster_name }}-ssl.yml"
   when: rabbitmq_ssl
 
 - name: preflight | check top level SSL configuration
