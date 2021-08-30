@@ -18,12 +18,12 @@
 
 - name: preflight | check certificates configuration
   fail:
-    msg: "{{ item }} required when SSL enabled."
+    msg: "certificates[{{ item }}] required when SSL enabled."
   when: "certificates[ item ] is undefined"
   loop:
     - "ca"
-    - "ansible_hostname|lower ~ '.crt'"
-    - "ansible_hostname|lower ~ '.key'"
+    - "{{ ansible_hostname|lower ~ '.crt' }}"
+    - "{{ ansible_hostname|lower ~ '.key' }}"
 
 - name: preflight | load vhosts configuration
   include_vars:
