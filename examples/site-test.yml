@@ -1,8 +1,0 @@
----
-
-- hosts: rabbitmq
-  become: True
-  serial:
-    - '100%'
-  roles:
-    - role: ansible-rabbitmq

@@ -1,0 +1,17 @@
+---
+
+certificates:
+  ca: |
+    # CA CERTIFICATE HERE
+
+  node1.crt: |
+    # NODE1 certificate
+
+  node1.key: |
+    # NODE1 key
+
+  node2.crt: |
+    # NODE2 certificate
+
+  node2.key: |
+    # NODE2 key
