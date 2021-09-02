@@ -1,21 +1,10 @@
 Rabbitmq 
 ========
 
-[![Build Status](https://travis-ci.org/abelboldu/ansible-rabbitmq.svg?branch=master)](https://travis-ci.org/abelboldu/ansible-rabbitmq) on master branch
-
 Playbook that installs and configures RabbitMQ message broker.
 
 Supports standalone or simple cluster deployment, it is based on https://github.com/abelboldu/ansible-rabbitmq role, without SSL or federation support.
 
-## Installation
-
-Use Ansible galaxy to install this playbook:
-
-    $ ansible-galaxy install openstack-ansible-galaxy.rabbitmq
-
-## Supported system
-
-Ubuntu 14.04 (Trusty), Ubuntu 16.04 (Xenial) and CentOS 7
 
 ## Role Variables
 
